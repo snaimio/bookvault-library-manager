@@ -8,14 +8,7 @@
 
 declare(strict_types=1);
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION['isLoggedIn'])) {
-    header('Location: login_form.php');
-    die();
-}
+require_once 'auth.php';
 
 // Get the book_id from the POST
 $book_id = filter_input(INPUT_POST, 'book_id', FILTER_VALIDATE_INT);

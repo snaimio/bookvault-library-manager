@@ -7,14 +7,7 @@
 
 declare(strict_types=1);
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION['isLoggedIn'])) {
-    header('Location: login_form.php');
-    die();
-}
+require_once 'auth.php';
 
 // Get form data
 $title          = filter_input(INPUT_POST, 'title');

@@ -7,16 +7,7 @@
 
 declare(strict_types=1);
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    // ↑ Needed so I can read the isLoggedIn flag below.
-}
-
-if (!isset($_SESSION['isLoggedIn'])) {
-    // ↑ Login guard: if the user isn't logged in, send them to the login page.
-    header('Location: login_form.php');
-    die();
-}
+require_once 'auth.php';
 
 require('database.php');
 require('functions.php');
