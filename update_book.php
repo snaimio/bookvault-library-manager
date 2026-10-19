@@ -31,19 +31,15 @@ $image = $_FILES['file1'];
 require_once('database.php');
 require_once('image_util.php');
 
-// Directory where images live
 $base_dir = 'images/';
 
 // ----- Validation -----
-
-// Check the book ID
 if ($book_id === null || $book_id === false) {
     $_SESSION['update_error'] = 'Invalid book reference. Please try again.';
     header('Location: update_error.php');
     die();
 }
 
-// Check for empty fields
 if ($title === null || $title === '' ||
     $author === null || $author === '' ||
     $genre === null || $genre === '' ||
@@ -71,17 +67,17 @@ if ($existing) {
     die();
 }
 
-// ----- Fetch the current book (to get the existing image name) -----
-
-$queryBook = 'SELECT imageName FROM books WHERE bookID = :bookID';
+// ----- Fetch the current book (SECURED) -----
+$queryBook = 'SELECT imageName FROM books WHERE bookID = :bookID AND userID = :userID';
 $statement = $db->prepare($queryBook);
 $statement->bindValue(':bookID', $book_id);
+$statement->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
 $statement->execute();
 $current = $statement->fetch();
 $statement->closeCursor();
 
 if (!$current) {
-    $_SESSION['update_error'] = 'Book not found. Please try again.';
+    $_SESSION['update_error'] = 'Book not found or you do not have permission to edit it.';
     header('Location: update_error.php');
     die();
 }
@@ -121,29 +117,21 @@ if ($image !== null && $image['error'] === UPLOAD_ERR_OK) {
 }
 
 // ----- Handle the cover image -----
-
-// Default: keep the existing image
 $image_name = $current['imageName'] ?? 'placeholder_100.jpg';
 $old_image_name = $image_name;
 
-// If a new file was uploaded, process it
 if ($image && $image['error'] == UPLOAD_ERR_OK) {
-    // Save the original to images/
     $original_filename = basename($image['name']);
     $upload_path = $base_dir . $original_filename;
     move_uploaded_file($image['tmp_name'], $upload_path);
 
-    // Generate the _400 and _100 thumbnails
     process_image($base_dir, $original_filename);
 
-    // Build the _100 thumbnail filename
     $dot_pos = strrpos($original_filename, '.');
     $new_image_name = substr($original_filename, 0, $dot_pos) . '_100' . substr($original_filename, $dot_pos);
 
-    // Override the image name
     $image_name = $new_image_name;
 
-    // Delete the old image files (unless it was the placeholder)
     if ($old_image_name != 'placeholder_100.jpg') {
         $old_base = substr($old_image_name, 0, strrpos($old_image_name, '_100'));
         $old_ext  = substr($old_image_name, strrpos($old_image_name, '.'));
@@ -161,8 +149,7 @@ if ($image && $image['error'] == UPLOAD_ERR_OK) {
     }
 }
 
-// ----- Update the book -----
-
+// ----- Update the book (SECURED) -----
 $query = 'UPDATE books
           SET title = :title,
               author = :author,
@@ -171,7 +158,7 @@ $query = 'UPDATE books
               publishedDate = :publishedDate,
               formatID = :formatID,
               imageName = :imageName
-          WHERE bookID = :bookID';
+          WHERE bookID = :bookID AND userID = :userID';
 
 $statement = $db->prepare($query);
 $statement->bindValue(':title', $title);
@@ -182,10 +169,10 @@ $statement->bindValue(':publishedDate', $published_date);
 $statement->bindValue(':formatID', $format_id);
 $statement->bindValue(':imageName', $image_name);
 $statement->bindValue(':bookID', $book_id);
+$statement->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
 $statement->execute();
 $statement->closeCursor();
 
-// Store a message for the confirmation page
 $_SESSION['updated_title'] = $title;
 
 header('Location: update_book_confirmation.php');

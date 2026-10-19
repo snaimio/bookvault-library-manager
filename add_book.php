@@ -100,8 +100,8 @@ if ($image && $image['error'] == UPLOAD_ERR_OK) {
 }
 
 // ----- Insert -----
-$query = 'INSERT INTO books (title, author, genre, isbn, publishedDate, formatID, imageName)
-          VALUES (:title, :author, :genre, :isbn, :publishedDate, :formatID, :imageName)';
+$query = 'INSERT INTO books (title, author, genre, isbn, publishedDate, formatID, imageName, userID)
+          VALUES (:title, :author, :genre, :isbn, :publishedDate, :formatID, :imageName, :userID)';
 
 $statement = $db->prepare($query);
 $statement->bindValue(':title', $title);
@@ -111,6 +111,7 @@ $statement->bindValue(':isbn', $isbn);
 $statement->bindValue(':publishedDate', $published_date);
 $statement->bindValue(':formatID', $format_id);
 $statement->bindValue(':imageName', $image_name);
+$statement->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
 $statement->execute();
 $statement->closeCursor();
 

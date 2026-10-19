@@ -23,14 +23,16 @@ require('functions.php');
 
 $pageTitle = 'Home';
 
-// Pull books and their format name using a LEFT JOIN
+// Pull ONLY the books that belong to the logged-in user
 $query = 'SELECT b.bookID, b.title, b.author, b.genre, b.isbn, b.publishedDate,
                  b.imageName, f.formatName
           FROM books b
           LEFT JOIN formats f ON b.formatID = f.formatID
+          WHERE b.userID = :userID
           ORDER BY b.title';
 
 $statement = $db->prepare($query);
+$statement->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
 $statement->execute();
 $rows = $statement->fetchAll();
 $statement->closeCursor();
@@ -39,7 +41,7 @@ require('header.php');
 ?>
 
 <main>
-    <h2>All Books</h2>
+    <h2>My Book Collection</h2>
 
     <p style="text-align: right;">
         Logged in as <strong><?= e($_SESSION['userName']) ?></strong> |
@@ -63,7 +65,7 @@ require('header.php');
         </thead>
         <tbody>
             <?php if (empty($rows)): ?>
-                <tr><td colspan="10">No books found.</td></tr>
+                <tr><td colspan="10">No books found in your collection.</td></tr>
             <?php else: ?>
                 <?php foreach ($rows as $row): ?>
                     <tr>

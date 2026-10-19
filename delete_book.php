@@ -28,24 +28,26 @@ if ($book_id === null || $book_id === false) {
 
 require_once('database.php');
 
-// Fetch the book first to get its imageName
-$queryBook = 'SELECT imageName FROM books WHERE bookID = :bookID';
+// Fetch the book first to get its imageName (SECURED)
+$queryBook = 'SELECT imageName FROM books WHERE bookID = :bookID AND userID = :userID';
 $statement = $db->prepare($queryBook);
 $statement->bindValue(':bookID', $book_id);
+$statement->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
 $statement->execute();
 $book = $statement->fetch();
 $statement->closeCursor();
 
-// If the book doesn't exist, go back to the list
+// If the book doesn't exist or doesn't belong to the user
 if (!$book) {
     header('Location: index.php');
     die();
 }
 
-// Delete the book
-$query = 'DELETE FROM books WHERE bookID = :bookID';
+// Delete the book (SECURED)
+$query = 'DELETE FROM books WHERE bookID = :bookID AND userID = :userID';
 $statement = $db->prepare($query);
 $statement->bindValue(':bookID', $book_id);
+$statement->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
 $statement->execute();
 $statement->closeCursor();
 

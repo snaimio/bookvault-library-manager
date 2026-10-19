@@ -28,17 +28,19 @@ if ($book_id === null || $book_id === false) {
     die();
 }
 
-// Fetch the book
+// Fetch the book (SECURED: Only fetch if it belongs to the logged-in user)
 $queryBook = 'SELECT bookID, title, author, genre, isbn, publishedDate, formatID, imageName
               FROM books
-              WHERE bookID = :bookID';
+              WHERE bookID = :bookID AND userID = :userID';
+
 $statement = $db->prepare($queryBook);
 $statement->bindValue(':bookID', $book_id);
+$statement->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
 $statement->execute();
 $book = $statement->fetch();
 $statement->closeCursor();
 
-// If the book doesn't exist, go back to the list
+// If the book doesn't exist, or doesn't belong to this user, go back to the list
 if (!$book) {
     header('Location: index.php');
     die();
