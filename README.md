@@ -12,6 +12,7 @@ A modern, secure, and production-ready library management web application built 
 
 ## 📑 Table of Contents
 
+- [Video Walkthrough Demo](#-video-walkthrough-demo)
 - [Core Capabilities & Architectural Highlights](#-core-capabilities--architectural-highlights)
 - [Key Features](#-key-features)
 - [Screenshots & Visual Walkthrough](#-screenshots--visual-walkthrough)
@@ -23,6 +24,30 @@ A modern, secure, and production-ready library management web application built 
 - [Multi-User Isolation Verification](#-multi-user-isolation-verification)
 - [Project Structure](#-project-structure)
 - [Author & License](#-author--license)
+
+---
+
+## 🎥 Video Walkthrough Demo
+
+Experience a complete visual tour of BookVault featuring high-definition browser mockups, synchronized studio voiceover narration, and step-by-step feature walkthroughs.
+
+<p align="center">
+  <img src="demo/bookvault_demo_preview.gif" width="100%" alt="BookVault Walkthrough Demo Animated Preview" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
+</p>
+
+<p align="center">
+  <a href="demo/bookvault_walkthrough_demo.mp4" target="_blank">
+    <img src="https://img.shields.io/badge/▶_Watch-Full_1080p_HD_Walkthrough_Video-4F46E5?style=for-the-badge&logo=quicktime&logoColor=white" alt="Watch Full Demo Video" />
+  </a>
+</p>
+
+> 🎬 **Walkthrough Chapters**:
+> 1. **User Registration & Validation**: Server-side data validation, Bcrypt password hashing (`PASSWORD_DEFAULT`), and username uniqueness enforcement.
+> 2. **Defensive Authentication**: Constant-time `password_verify()`, session ID regeneration (`session_regenerate_id(true)`), and centralized `auth.php` middleware.
+> 3. **Brute-Force Rate Limiting & Lockout**: Automated 5-minute lockout on 3 failed login attempts with synchronized client-side countdown timer.
+> 4. **Multi-Tenant Catalog Dashboard**: Strict per-user `$userID` SQL scoping, relational format & genre badges, and 100% prepared statements.
+> 5. **Dynamic CRUD Editing**: Pre-populated editing controls, real-time client-side cover image replacement preview, and ownership authorization.
+> 6. **Automated GD Image Pipeline**: Aspect-ratio-preserving dual-tier resizing (`_100` thumbnails, `_400` details) and orphan asset cleanup.
 
 ---
 
@@ -209,6 +234,9 @@ To verify that multi-tenant data boundaries are strictly maintained:
 bookvault-library-manager/
 ├── css/
 │   └── books2.css                   # Main application stylesheet with responsive queries
+├── demo/                            # Full-length video walkthrough & media previews
+│   ├── bookvault_demo_preview.gif   # Web-ready animated walkthrough GIF for GitHub
+│   └── bookvault_walkthrough_demo.mp4 # Full 1080p HD walkthrough video with studio voiceover
 ├── images/                          # Image assets (originals, _100 thumbnails, _400 details)
 │   ├── placeholder.jpg              # Default fallback cover
 │   ├── placeholder_100.jpg          # Standard 100px thumbnail
