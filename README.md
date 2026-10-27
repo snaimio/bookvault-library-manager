@@ -29,17 +29,17 @@ A modern, secure, and production-ready library management web application built 
 
 ## 🎥 Video Walkthrough Demo
 
-Experience a complete visual tour of BookVault featuring high-definition browser mockups, synchronized studio voiceover narration, and step-by-step feature walkthroughs.
+Watch the full walkthrough demonstration featuring studio neural voice narration, browser mockups, defensive authentication, brute-force rate limiting, and automated GD image processing.
 
-<p align="center">
-  <img src="demo/bookvault_demo_preview.gif" width="100%" alt="BookVault Walkthrough Demo Animated Preview" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
-</p>
+https://github.com/user-attachments/assets/fdcfe4c4-56d0-4888-9787-d85a00d6f7a0
 
-<p align="center">
-  <a href="demo/bookvault_walkthrough_demo.mp4" target="_blank">
-    <img src="https://img.shields.io/badge/▶_Watch-Full_1080p_HD_Walkthrough_Video-4F46E5?style=for-the-badge&logo=quicktime&logoColor=white" alt="Watch Full Demo Video" />
-  </a>
-</p>
+<details>
+<summary><strong>Click to preview animated walkthrough GIF</strong></summary>
+<br />
+<div align="center">
+  <img src="demo/bookvault_demo_preview.gif" alt="BookVault Walkthrough Demo Animated Preview" width="100%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.25);" />
+</div>
+</details>
 
 > 🎬 **Walkthrough Chapters**:
 > 1. **User Registration & Validation**: Server-side data validation, Bcrypt password hashing (`PASSWORD_DEFAULT`), and username uniqueness enforcement.
