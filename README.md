@@ -1,4 +1,4 @@
-# 📚 Book Library — Full-Stack PHP & MySQL Web Application
+# 📚 BookVault — Full-Stack PHP & MySQL Library Management System
 
 [![PHP Version](https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
 [![Database](https://img.shields.io/badge/MySQL-MariaDB-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com/)
@@ -153,8 +153,8 @@ The database leverages MySQL/MariaDB InnoDB with strict foreign key constraints,
    ```bash
    # macOS XAMPP default path:
    cd /Applications/XAMPP/xamppfiles/htdocs/
-   git clone https://github.com/snaimio/PHPAssignment1.git book-library
-   cd book-library
+   git clone https://github.com/snaimio/bookvault-library-manager.git
+   cd bookvault-library-manager
    ```
 
 2. **Start Web & Database Services:**
@@ -177,7 +177,7 @@ The database leverages MySQL/MariaDB InnoDB with strict foreign key constraints,
 5. **Launch Application:**
    Open the application in your browser:
    ```
-   http://localhost/book-library/login_form.php
+   http://localhost/bookvault-library-manager/login_form.php
    ```
 
 ---
@@ -206,7 +206,7 @@ To verify that multi-tenant data boundaries are strictly maintained:
 ## 📁 Project Structure
 
 ```
-book-library/
+bookvault-library-manager/
 ├── css/
 │   └── books2.css                   # Main application stylesheet with responsive queries
 ├── images/                          # Image assets (originals, _100 thumbnails, _400 details)
